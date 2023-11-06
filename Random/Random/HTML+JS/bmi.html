@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI Calculator</title>
+    <style>
+        body{
+            background-color: lightgray;
+        }
+        .box {
+  margin: auto;
+  width: 60%;
+  position: relative;
+  top: 200px;
+  border: 3px solid #73AD21;
+  padding: 10px;
+  height: 200px;
+}
+
+h2{
+    color: chocolate;
+    font-family: 'Times New Roman', Times, serif;
+}
+.w{
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+    border-bottom: 2px solid black; 
+}
+
+    </style>
+</head>
+<body>
+    <h1>BMI CALCULATOR</h1>
+    <div class="box">
+        <div class="inner">
+            <h3>Enter your Weight</h3>
+            <input type="number" class="w" id="weight" placeholder="In Kgs" required>
+            <h3>Enter your height</h3>
+            <input type="number" class="w" id="height" placeholder="In meters" required>
+            <h3 id="c"></h3>
+            <button class="btn" onclick="cal();" id="b">Calculate</button>
+        </div>
+    </div>
+    <script>
+        function cal()
+        {
+            var w=parseFloat(document.getElementById('weight').value)
+            var h=parseFloat(document.getElementById('height').value)
+            var x=parseFloat(h*h);
+            var bmi=parseFloat(w/x)
+            document.getElementById('b').style.display="none";
+            if (bmi <=18.5)
+            {
+                document.getElementById('c').innerHTML="Underweight"
+            }
+            else if (bmi >18.5 && bmi<=24.9)
+            {
+                document.getElementById('c').innerHTML="Healthy"
+            }
+            else if(bmi >24.9 && bmi <=29.9)
+            {
+                document.getElementById('c').innerHTML="Overweight";
+            }
+            else
+            {
+                document.getElementById('c').innerHTML="Obessed"
+            }
+        }
+    </script>
+</body>
+</html>

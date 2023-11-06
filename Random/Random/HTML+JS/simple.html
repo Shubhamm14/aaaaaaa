@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Intrest Calculator</title>
+    <style>
+        body{
+            background-color: gray;
+        }
+        .box{
+            background-color: lightblue;
+            width: 40%;
+            height: 300px;
+            position: relative;
+            left: 400px;
+            top: 100px;
+            border: black 2px solid;
+            box-shadow: 30px;
+        }
+        .inner{
+            position: relative;
+            top: 50px;
+            left: 50px;
+        }
+        .show{
+             color: black;
+             font-family: 'Times New Roman', Times, serif;
+             font-size: large;
+             font-weight: bolder;
+             position: relative;
+             top:100px;
+             left: 20px;
+        }
+        .h{
+            position: relative;
+            left: 500px;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="h">Simple Intrest Calculator</h1>
+    <div class="box">
+        <div class="inner">
+        Principle (P):
+        <input type="number" name="p" id="p" required><br><br>
+        Rate:
+        <input type="number" name="r" id="r" required><br><br>
+        For how many years:
+        <input type="number" name="n" id="n" required><br><br>
+        </div>
+        <button style="background-color: lightgreen; width: 80px; height: 20px;position: relative; top: 50px; left: 50px; padding: auto;" onclick="cal();"  id="b">Calculate</button>
+        <div class="show" id="s"></div>
+    </div>
+    <script>
+        function cal()
+        {
+            document.getElementById('b').style.display="none"
+            var p=document.getElementById('p').value;
+            var  r=document.getElementById('r').value;
+            var n=document.getElementById('n').value;
+            var si=(p*n*r)/100;
+            document.getElementById('s').innerHTML="The Simple intrest is "+si;
+
+            
+        }
+    </script>
+</body>
+</html>

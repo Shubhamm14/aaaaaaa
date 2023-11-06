@@ -1,0 +1,109 @@
+To display student information such as Name, Roll No, Mobile No, and Email ID using Django, you need to create a Django web application with a model to represent the student information and a view to display it. Here's a step-by-step guide to achieve this:
+
+1. **Create a Django Project and App:**
+
+   If you haven't already created a Django project and app, you can do so by running the following commands:
+
+   ```bash
+   django-admin startproject studentinfo_project
+   cd studentinfo_project
+   python manage.py startapp studentinfo
+   ```
+
+2. **Define the Model:**
+
+   In the `studentinfo` app, define a model to represent the student information. Open the `models.py` file in the `studentinfo` directory and create the model:
+
+   ```python
+   from django.db import models
+
+   class Student(models.Model):
+       name = models.CharField(max_length=100)
+       roll_no = models.CharField(max_length=20)
+       mobile_no = models.CharField(max_length=15)
+       email = models.EmailField(max_length=100)
+
+       def __str__(self):
+           return self.name
+   ```
+
+3. **Migrate the Database:**
+
+   Apply the initial migrations to create the database table for your `Student` model:
+
+   ```bash
+   python manage.py makemigrations
+   python manage.py migrate
+   ```
+
+4. **Create the View:**
+
+   Create a view to fetch and display student information. In your `views.py`:
+
+   ```python
+   from django.shortcuts import render
+   from .models import Student
+
+   def student_list(request):
+       students = Student.objects.all()
+       return render(request, 'studentinfo/student_list.html', {'students': students})
+   ```
+
+5. **Create URL Patterns:**
+
+   Define a URL pattern to route requests to the `student_list` view. In your `urls.py`:
+
+   ```python
+   from django.urls import path
+   from . import views
+
+   urlpatterns = [
+       path('students/', views.student_list, name='student_list'),
+   ]
+   ```
+
+6. **Create the Template:**
+
+   Create an HTML template to display the student information. Place this template in a `templates` directory within your `studentinfo` app directory.
+
+   - `studentinfo/templates/studentinfo/student_list.html`:
+
+     ```html
+     <!DOCTYPE html>
+     <html>
+     <head>
+         <title>Student Information</title>
+     </head>
+     <body>
+         <h1>Student Information</h1>
+         <table>
+             <tr>
+                 <th>Name</th>
+                 <th>Roll No</th>
+                 <th>Mobile No</th>
+                 <th>Email</th>
+             </tr>
+             {% for student in students %}
+             <tr>
+                 <td>{{ student.name }}</td>
+                 <td>{{ student.roll_no }}</td>
+                 <td>{{ student.mobile_no }}</td>
+                 <td>{{ student.email }}</td>
+             </tr>
+             {% endfor %}
+         </table>
+     </body>
+     </html>
+     ```
+
+7. **Run the Development Server:**
+
+   Start the development server:
+
+   ```bash
+   python manage.py runserver
+   ```
+
+   Your student information page should now be accessible at `http://localhost:8000/students/`, displaying the student information from the database.
+
+This is a basic implementation of a web page to display student information using Django. You can expand and enhance it by adding features like student registration, user authentication, and better styling. Additionally, consider deploying your app to a production server when you're ready to share it with others.
