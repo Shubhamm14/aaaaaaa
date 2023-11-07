@@ -1,0 +1,147 @@
+Creating a basic ToDo web application using Django is a great way to learn the framework and build a useful tool. Here's a step-by-step guide to design a simple ToDo app using Django:
+
+1. **Install Django:**
+
+   If you haven't already, install Django by running the following command:
+
+   ```bash
+   pip install django
+   ```
+
+2. **Create a Django Project and App:**
+
+   Create a new Django project and a separate app for the ToDo functionality:
+
+   ```bash
+   django-admin startproject todo_project
+   cd todo_project
+   python manage.py startapp todo
+   ```
+
+3. **Define the Model:**
+
+   In your `todo` app, define a model for the ToDo items. Open the `models.py` file in the `todo` directory and define the model:
+
+   ```python
+   from django.db import models
+
+   class Task(models.Model):
+       title = models.CharField(max_length=200)
+       completed = models.BooleanField(default=False)
+
+       def __str__(self):
+           return self.title
+   ```
+
+4. **Migrate the Database:**
+
+   Apply the initial migrations to create the database tables for your model:
+
+   ```bash
+   python manage.py makemigrations
+   python manage.py migrate
+   ```
+
+5. **Create Views:**
+
+   Create views to handle listing, adding, updating, and deleting tasks. In your `views.py`:
+
+   ```python
+   from django.shortcuts import render, redirect
+   from .models import Task
+
+   def task_list(request):
+       tasks = Task.objects.all()
+       return render(request, 'todo/task_list.html', {'tasks': tasks})
+
+   def task_create(request):
+       if request.method == 'POST':
+           title = request.POST.get('title')
+           Task.objects.create(title=title)
+           return redirect('task_list')
+       return render(request, 'todo/task_form.html')
+
+   def task_update(request, pk):
+       task = Task.objects.get(pk=pk)
+       if request.method == 'POST':
+           task.title = request.POST.get('title')
+           task.completed = bool(request.POST.get('completed'))
+           task.save()
+           return redirect('task_list')
+       return render(request, 'todo/task_form.html', {'task': task})
+
+   def task_delete(request, pk):
+       task = Task.objects.get(pk=pk)
+       task.delete()
+       return redirect('task_list')
+   ```
+
+6. **Create URL Patterns:**
+
+   Define URL patterns to route requests to the appropriate views. In your `urls.py`:
+
+   ```python
+   from django.urls import path
+   from . import views
+
+   urlpatterns = [
+       path('', views.task_list, name='task_list'),
+       path('create/', views.task_create, name='task_create'),
+       path('update/<int:pk>/', views.task_update, name='task_update'),
+       path('delete/<int:pk>/', views.task_delete, name='task_delete'),
+   ]
+   ```
+
+7. **Create Templates:**
+
+   Create HTML templates for listing tasks and the task form. Place these templates in a `templates` directory within your `todo` app directory.
+
+   - `todo/templates/todo/task_list.html`:
+
+     ```html
+     {% extends "base.html" %}
+
+     {% block content %}
+     <h1>Tasks</h1>
+     <ul>
+       {% for task in tasks %}
+         <li>
+           {{ task.title }}
+           <a href="{% url 'task_update' task.pk %}">Edit</a>
+           <a href="{% url 'task_delete' task.pk %}">Delete</a>
+         </li>
+       {% endfor %}
+     </ul>
+     <a href="{% url 'task_create' %}">Add Task</a>
+     {% endblock %}
+     ```
+
+   - `todo/templates/todo/task_form.html`:
+
+     ```html
+     {% extends "base.html" %}
+
+     {% block content %}
+     <h1>{{ "Edit Task" if task else "Add Task" }}</h1>
+     <form method="post">
+       {% csrf_token %}
+       <label for="title">Title</label>
+       <input type="text" id="title" name="title" value="{{ task.title }}" required>
+       <label for="completed">Completed</label>
+       <input type="checkbox" id="completed" name="completed" {% if task.completed %}checked{% endif %}>
+       <button type="submit">Save</button>
+     </form>
+     {% endblock %}
+     ```
+
+8. **Run the Development Server:**
+
+   Start the development server:
+
+   ```bash
+   python manage.py runserver
+   ```
+
+   Your ToDo web application should now be accessible at `http://localhost:8000/`.
+
+This is a basic implementation of a ToDo web app using Django. You can expand and enhance it by adding features like user authentication, due dates, prioritization, and better styling. Additionally, consider deploying your app to a production server when you're ready to share it with others.

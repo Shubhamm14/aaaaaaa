@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Management</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    max-width: 400px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    font-size: 24px;
+}
+
+label, input, select, textarea {
+    margin-bottom: 10px;
+    display: block;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 10px;
+}
+
+button[type="reset"] {
+    background-color: #dc3545;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Project Management</h1>
+        <form onsubmit="return false">
+            <label for="projectName">Project:</label>
+            <input type="text" id="projectName" required><br><br>
+
+            <label for="assignedTo">Assigned to:</label>
+            <select id="assignedTo" required>
+                <option value="FE">Frontend</option>
+                <option value="BE">Backend</option>
+                <option value="IT">IT</option>
+            </select><br><br>
+
+            <label for="startDate">Start:</label>
+            <input type="date" id="startDate" required><br><br>
+
+            <label for="endDate">End:</label>
+            <input type="date" id="endDate" required><br><br>
+
+            <label>Priority:</label>
+            <input type="radio" name="priority" value="High"> High
+            <input type="radio" name="priority" value="Average"> Average
+            <input type="radio" name="priority" value="Low"> Low<br><br>
+
+            <label for="description">Description:</label><br>
+            <textarea id="description" rows="4" cols="50"></textarea><br><br>
+
+            <button onclick="submitForm()">Submit</button>
+            <button type="reset">Clear</button>
+        </form>
+    </div>
+
+    <script>
+        function submitForm() {
+    var projectName = document.getElementById("projectName").value;
+    var assignedTo = document.getElementById("assignedTo").value;
+    var startDate = document.getElementById("startDate").value;
+    var endDate = document.getElementById("endDate").value;
+    var priority = document.querySelector('input[name="priority"]:checked');
+    var description = document.getElementById("description").value;
+
+    if (!projectName || !assignedTo || !startDate || !endDate || !priority || !description) {
+        alert("Please fill in all fields!");
+        return;
+    }
+
+    var priorityValue = priority.value;
+
+    // You can use the collected data for further processing or send it to a backend server.
+    console.log("Project Name:", projectName);
+    console.log("Assigned To:", assignedTo);
+    console.log("Start Date:", startDate);
+    console.log("End Date:", endDate);
+    console.log("Priority:", priorityValue);
+    console.log("Description:", description);
+}
+
+    </script>
+</body>
+</html>

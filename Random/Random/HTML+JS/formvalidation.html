@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background-color: lightgreen;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h3>Step 1: Your details: </h3>
+        Name:
+        <input type="text" id="name" name="name" placeholder="Enter your name">
+        Email:
+        <input type="email" id="email" name="email" placeholder="Enter your email">
+        Phone no:
+        <input type="number" id="phone" name="phone" placeholder="Enter your contact number">
+    </div>
+    <div class="box">
+        <h3>Step 2: Delivery Address</h3>
+        Address:
+        <input type="text" id="Address" name="Address" style="width: 200px; height: 60px;">
+        Postcode:
+        <input type="number" id="p" name="p">
+        Country:
+        <input type="text" id="c" name="c">
+    </div>
+    <div class="box">
+        <h3>Step 3: Card Details</h3>
+
+        Card Number: 
+        <input type="number" name="card" id="card">
+        Security Code:
+        <input type="number" name="s" id="s">
+        Name on Card:
+        <input type="text" id="nc" name="nc" placeholder="Exact name on card">
+
+
+    </div>
+    <button style="border-radius: 30px; background-color: black; color: white;" onclick="buy();">Buy it!</button>
+    <script>
+        function buy(){
+            var name=document.getElementById('name').value;
+            var email=document.getElementById('email').value;
+            var phone=document.getElementById('phone').value;
+            var a=document.getElementById('Address').value;
+            var p=document.getElementById('p').value
+            var c=document.getElementById('c').value
+            var card=document.getElementById('card').value
+            var s=document.getElementById('s').value
+            var nc=document.getElementById('nc').value
+        if (name=="" || email=="" || phone=="" || a==""||p==""||c==""||card==""||s==""||nc=="")
+        {
+            alert("Each field is a requird field");
+        }
+        else if(phone.length >10 || phone.length<10)
+        {
+            alert("Invalid phone number")
+        }
+        else if(p.length<6 || p.length>6)
+            {
+                alert("Inavlid postcode");
+            }
+        
+    }
+        
+
+    </script>
+</body>
+</html>
